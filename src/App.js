@@ -6,7 +6,8 @@ import {LayerProvider} from "./components/context/layerContext";
 import UserFromCreate from './components/user/user-from-create';
 import MapView from './components/map/map-view';
 import AddMarker from './components/map/map-add-marker';
-import Parcours from './components/map/map-add-parcours';
+import AddParcours from './components/map/map-add-parcours';
+import AllParcours from './components/map/map-all-parcours';
 
 
 function App() {
@@ -14,12 +15,24 @@ function App() {
 
   const [points, setPoints] = useState([50.83772875638055,4.389038085937501]);
 
+  const [parcours, setParcours] = useState();
+
+  const [idParcours, setIdParcours] = useState();
+
   const addUser = (data) => {
     setDataUser(data);
   }
 
   const addMarker = (data) => {
     setPoints(data);
+  }
+
+  const addParcours = (data) => {
+    setParcours(data);
+  }
+
+  const addIdParcours = (data) => {
+    setIdParcours(data);
   }
   
 
@@ -35,11 +48,11 @@ function App() {
                   <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28" alt="logo" />
                 </Link>
 
-                <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                {/* <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                   <span aria-hidden="true"></span>
                   <span aria-hidden="true"></span>
                   <span aria-hidden="true"></span>
-                </a>
+                </a> */}
               </div>
 
               <div id="navbarBasicExample" className="navbar-menu">
@@ -48,33 +61,19 @@ function App() {
                     Inscription
                   </Link>
 
-                  <Link to="/parcours/add-markers" className="navbar-item">
-                     Parcours
-                  </Link>
-
-                  {/* <div className="navbar-item has-dropdown is-hoverable">
-                    <a className="navbar-link">
-                      More
-                    </a>
-
+                  <div className="navbar-item has-dropdown is-hoverable">
+                    <Link to="/parcours/all" className="navbar-link">
+                      Parcours
+                    </Link>
                     <div className="navbar-dropdown">
-                      <a className="navbar-item">
-                        About
-                      </a>
-                      <a className="navbar-item">
-                        Jobs
-                      </a>
-                      <a className="navbar-item">
-                        Contact
-                      </a>
-                      <a className="navbar-item">
-                        Report an issue
-                      </a>
+                        <Link to="/parcours" className="navbar-item">
+                          Ajouter un parcour
+                        </Link>
                     </div>
-                  </div> */}
+                  </div>
                 </div>
 
-                <div className="navbar-end">
+                {/* <div className="navbar-end">
                   <div className="navbar-item">
                     <div className="buttons">
                       <a className="button is-primary">
@@ -85,7 +84,7 @@ function App() {
                       </a>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </nav>
           </header>
@@ -99,14 +98,17 @@ function App() {
               <UserFromCreate/>
             </Route>
             <Route exact path="/parcours">
-              <LayerProvider value={{points, addMarker}}>
-                <AddMarker/>
+              <LayerProvider value={{parcours, addParcours,points, addMarker,addIdParcours,idParcours}}>
+                <AddParcours/>
               </LayerProvider>
             </Route>
             <Route exact path="/parcours/add-markers">
-              <LayerProvider value={{points, addMarker}}>
-                <Parcours/>
+              <LayerProvider value={{points, addMarker,parcours, addParcours,addIdParcours,idParcours}}>
+                <AddMarker/>
               </LayerProvider>
+            </Route>
+            <Route exact path="/parcours/all">
+              <AllParcours/>
             </Route>
           </main>
           <footer>
