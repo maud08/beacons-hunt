@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import DataContext from '../context/userContext';
 import LayerContext from '../context/layerContext';
 
-const URL_PARCOUR = "http://localhost:1337/parcours/";
+const URL_PARCOUR = "https://aqueous-atoll-45909.herokuapp.com/parcours/";
 
 function UserRejoin(){
     const map = useContext(LayerContext);

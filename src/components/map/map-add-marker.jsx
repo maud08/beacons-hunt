@@ -3,7 +3,7 @@ import {Map,Marker,Popup, TileLayer} from 'react-leaflet';
 import LayerContext from "../context/layerContext";
 import Axios from "axios";
 
-const URL_BALISE = "http://localhost:1337/balises";
+const URL_BALISE = "https://aqueous-atoll-45909.herokuapp.com/balises";
 
 function AddMarker() {
     const map = useContext(LayerContext);

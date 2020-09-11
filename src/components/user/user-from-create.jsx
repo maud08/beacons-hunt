@@ -2,7 +2,7 @@ import React, { useState, useContext} from 'react';
 import DataContext from '../context/userContext';
 import Axios from 'axios';
 
-const URL_USER = "http://localhost:1337/users";
+const URL_USER = "https://aqueous-atoll-45909.herokuapp.com/users";
 
 function UserFromCreate() {
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Axios from 'axios';
 import {Map,Marker,Popup, TileLayer} from 'react-leaflet';
 
-const URL_PARCOUR = "http://localhost:1337/parcours/";
+const URL_PARCOUR = "https://aqueous-atoll-45909.herokuapp.com/parcours/";
 
 function Parcour(){
     const [data,setData]= useState();

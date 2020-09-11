@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import DataContext from '../context/userContext';
 import Axios from 'axios';
 import { useHistory } from 'react-router';
-const URL_USER = "http://localhost:1337/users";
+const URL_USER = "https://aqueous-atoll-45909.herokuapp.com/users";
 
 function Login(){
     const userContext = useContext(DataContext);

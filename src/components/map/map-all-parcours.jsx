@@ -4,7 +4,7 @@ import Axios from 'axios';
 import Parcour from "./map-parcour";
 import DataContext from '../context/userContext';
 
-const URL_PARCOURS= "http://localhost:1337/parcours/";
+const URL_PARCOURS= "https://aqueous-atoll-45909.herokuapp.com/parcours/";
 
 function AllParcours(){
     const [parcoursData,setData] = useState([]);

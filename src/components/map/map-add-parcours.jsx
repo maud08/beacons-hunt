@@ -3,7 +3,7 @@ import Axios from 'axios';
 import LayerContext from '../context/layerContext';
 import AddMarker from './map-add-marker';
 
-const URL_PARCOURS = "http://localhost:1337/parcours";
+const URL_PARCOURS = "https://aqueous-atoll-45909.herokuapp.com/parcours";
 let idDataParcours= null;
 
 

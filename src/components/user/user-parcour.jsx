@@ -5,7 +5,7 @@ import Parcour from "../map/map-parcour";
 
 import DataContext from '../context/userContext';
 
-const URL_PARCOURS= "http://localhost:1337/users/";
+const URL_PARCOURS= "https://aqueous-atoll-45909.herokuapp.com/users/";
 
 function UserParcour(){
     const [parcoursData,setData] = useState([]);
