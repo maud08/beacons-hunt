@@ -20,6 +20,7 @@ function App() {
   const [idParcours, setIdParcours] = useState();
   let [organisateur, setOrganisateur] = useState();
   let roles = [];
+  const [isActive, setisActive] = useState(false);
 
   const addUser = (data) => {
     setDataUser(data);
@@ -66,14 +67,23 @@ function App() {
                 <span>Beacons hunt</span>
                 </Link>
 
-                {/* <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                </a> */}
+                <a
+            onClick={() => {
+              setisActive(!isActive);
+            }}
+            role="button"
+            className={`navbar-burger burger ${isActive ? "is-active" : ""}`}
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
               </div>
 
-              <div id="navbarBasicExample" className="navbar-menu">
+              <div id="navbarBasicExample" className={`navbar-menu ${isActive ? "is-active" : ""}`}>
                 <div className="navbar-start">
                   <div className="navbar-item has-dropdown is-hoverable">
                     <Link to="/parcours" className="navbar-link">
