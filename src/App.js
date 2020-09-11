@@ -27,6 +27,7 @@ function App() {
 
   const addIdUser = (data) => {
     setDataUser(data);
+    console.log(data)
     roles = data.role_users;
     const role = roles.find(role => role.label === "organisateur");
     if(role !== undefined ){

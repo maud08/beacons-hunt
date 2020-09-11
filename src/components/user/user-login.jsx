@@ -30,12 +30,14 @@ function Login(){
     },[]);
     const hanleSubmit = (event) => {
         event.preventDefault();
+        if(usersData !== undefined){
             const user = usersData.find(user => user.email === userData.email);
-        if(user !== null ){
-            userContext.addIdUser({
-                ...user
-            });
-            history.push("/parcours")
+            if(user !== undefined ){
+                userContext.addIdUser({
+                    ...user
+                });
+                history.push("/parcours")
+            }
         }
         
     }
