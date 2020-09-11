@@ -8,3 +8,27 @@
 @import '../node_modules/bulma/sass/layout/hero.sass';
 @import '../node_modules/bulma/sass/layout/section.sass';
 .leaflet-container {  width: 100vw;  height: 100vh; }
+.map {
+    z-index: 0;
+}
+form {
+    margin: 1rem auto;
+    width: 25%;
+    div{
+        padding: 1rem 0
+    }
+}
+.block-list{
+    li,a{
+        padding: 1rem;
+    }
+    h3{
+        padding: 0 0 0.75rem 0;
+    }
+}
+.button.is-info {
+    margin: 0 0.5rem 0 0;
+}
+h3{
+    font-size: 1.5rem;
+}

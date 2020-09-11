@@ -32,7 +32,7 @@ function AddParcours() {
            setSubmit({
                 submit: true
            });
-           if(idParcours !==null){
+           if(idParcours !== null){
             parcours.addIdParcours({
                 ...idParcours,idDataParcours
             })

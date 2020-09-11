@@ -19,8 +19,6 @@ function AddMarker() {
 
     const handleParcours = (event) => {
         event.preventDefault();
-        /* console.log("markers",markers); */
-        /* console.log("id",map.idParcours); */
         markers.forEach(element => {
             console.log(element)
             Axios.post(URL_BALISE,{
@@ -40,6 +38,7 @@ function AddMarker() {
 
     return(
         <>
+            
             <button className="button is-success" onClick={handleParcours}>Valider votre parcours</button>
             <Map center={map.points} zoom={zoom} onclick={addMarker}>
             <TileLayer
