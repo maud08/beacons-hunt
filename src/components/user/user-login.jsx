@@ -28,7 +28,7 @@ function Login(){
             })
         
     },[]);
-    const hanleSubmit = (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
         if(usersData !== undefined){
             const user = usersData.find(user => user.email === userData.email);
@@ -43,7 +43,7 @@ function Login(){
     }
     return(
         <>
-        <form onSubmit={hanleSubmit}>
+        <form onSubmit={handleSubmit}>
         <div>
             <label>Email:</label>
             <input type="text" name="email" onChange={handleForm}/>

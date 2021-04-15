@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import './App.scss';
@@ -28,7 +29,6 @@ function App() {
 
   const addIdUser = (data) => {
     setDataUser(data);
-    console.log(data)
     roles = data.role_users;
     const role = roles.find(role => role.label === "organisateur");
     if(role !== undefined ){
@@ -54,7 +54,6 @@ function App() {
     setDataUser(user);
   }
 
-  console.log(dataUser);
   return (
     <div>
       <DataProvider value={{addUser, dataUser,addIdUser}}>

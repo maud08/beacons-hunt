@@ -1,16 +1,17 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {Map,Marker,Popup, TileLayer, Leaflet} from 'react-leaflet';
+// import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
+import {Map,Marker,Popup, TileLayer} from 'react-leaflet';
 import Axios from "axios";
 import { useParams } from "react-router-dom";
-import DataContext from '../context/userContext';
-import LayerContext from '../context/layerContext';
+// import DataContext from '../context/userContext';
+// import LayerContext from '../context/layerContext';
 
 const URL_PARCOUR = "https://aqueous-atoll-45909.herokuapp.com/parcours/";
 
 function UserRejoin(){
-    const map = useContext(LayerContext);
-    const user = useContext(DataContext)
-    const [markers, setMarkers] = useState([]);
+    // const map = useContext(LayerContext)
+    // const user = useContext(DataContext)
+    const [markers, setMarkers] = useState([])
     const [currentPosition, setCurrentPosition] = useState([])
     const id = useParams();
     const idParcour = id.id;
@@ -29,7 +30,7 @@ function UserRejoin(){
         navigator.geolocation.getCurrentPosition((position) => {
             setCurrentPosition([{"lat":position.coords.latitude,"lng":position.coords.longitude}])
         });
-    }, []);
+    }, [idParcour]);
 
     if(markers !==undefined){
         position = markers[0];

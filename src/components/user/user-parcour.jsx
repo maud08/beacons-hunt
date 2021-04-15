@@ -29,7 +29,7 @@ function UserParcour(){
             
         }
         
-    }, []);
+    }, [dataUser, participant]);
     return(
         <Router basename="/">
         <ul className="block-list">
@@ -38,7 +38,7 @@ function UserParcour(){
                     <li key={parcour.id}>
                         <h3>{parcour.Label}</h3>
                         <Link className="button is-info is-small" to={"/parcours/" + parcour.id }>Voir</Link>
-                        <a className="button is-primary is-small" Href={"/parcours/actif/" + parcour.id }>Rejoindre</a>
+                        <a className="button is-primary is-small" href={"/parcours/actif/" + parcour.id }>Rejoindre</a>
                     </li>
 
                 )

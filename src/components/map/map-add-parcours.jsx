@@ -12,7 +12,7 @@ function AddParcours() {
     const parcours =  useContext(LayerContext);
     const [parcoursData, setParcoursData] = useState();
     const [isSubmit,setSubmit] = useState({submit:false});
-    const [idParcours,setIdParcours] = useState();
+    const [idParcours] = useState();
 
     const handleForm = (event) => {
         const {name,value} = event.target;
