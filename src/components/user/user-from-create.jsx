@@ -1,54 +1,115 @@
 import React, { useState, useContext} from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import DataContext from '../context/userContext';
-import Axios from 'axios';
-
-const URL_USER = "https://aqueous-atoll-45909.herokuapp.com/users";
+import {FirebaseContext} from '../firebase';
 
 function UserFromCreate() {
 
     const user = useContext(DataContext);
 
+    const firebase = useContext(FirebaseContext);
+
+    const history = useHistory();
+   
     const [userData, setUserData] = useState();
+
+    const [error, setError] = useState('');
+
+    const [errorPswd, setErrorPswd] = useState('');
+
+    const [disable, setDisable] = useState(true);
 
     const handleForm = (event) => {
         const {name,value} = event.target;
         setUserData({
             ...userData, [name]: value
         })
+        setDisable(false)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        user.addUser({
-            ...userData
-        });
-        Axios.post(URL_USER,{...userData})
-        .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        const {email, password, confirmPassword,pseudo} = userData;
+        if(password === confirmPassword){
+            firebase.signupUser(email,password)
+            //création de l'user ds la collection users
+            .then( authUser => {
+              return firebase.user(authUser.user.uid).set({
+                id: authUser.user.uid,
+                pseudo,
+                email,
+                organizer: false
+              })
+            })
+            .then(() => {
+                setUserData({...userData});
+                history.push('/')
+            })
+            .catch(error => {
+                setError(error);
+                setUserData({...userData})
+            })
+            user.addUser({
+                ...userData
+            });
+        }else{
+            setErrorPswd('Les mots passe ne sont pas identiques !!!')
+            setUserData({...userData})
+        }
+        
     }
- 
+
+    //Gestion erreur
+    const errorMsg = error !== '' && <span className="help is-danger">{error.message}</span>;
+    const errorMsgPswd = errorPswd !== '' && <span className="help is-danger">{errorPswd}</span>;
     
-    return(
+    return (
+      <>
         <form onSubmit={handleSubmit}>
-            <div>
-            <label className="has-text-danger">Nom d'utlisateur:</label>
-            <input type="text" name="username" onChange={handleForm}/>
+            {errorMsg}
+          <div className="field">
+            <label className="label">Nom d'utlisateur:</label>
+            <div className="control">
+              <input className="input" type="text" name="pseudo" onChange={handleForm} placeholder="pseudo" required/>
             </div>
-            <div>
-                <label>Email:</label>
-                <input type="text" name="email" onChange={handleForm}/>
+          </div>
+          <div className="field">
+            <label className="label">Email:</label>
+            <div className="control">
+              <input className="input" type="text" name="email" onChange={handleForm} placeholder="Email" required/>
             </div>
-            <div>
-                <label>Mot de passe:</label>
-                <input type="password" name="password" onChange={handleForm}/>
+          </div>
+          <div className="field">
+            <label className="label">Mot de passe:</label>
+            <div className="control">
+              <input className="input" type="password" name="password" onChange={handleForm} placeholder="mot de passe" required/>
             </div>
-            <button className="button is-primary" type="submit">Inscription</button>
+          </div>
+          {errorMsgPswd}
+          <div className="field">
+            <label className="label">Confirmer mot de passe:</label>
+            <div className="control">
+              <input
+                className= "input"
+                type="password"
+                name="confirmPassword"
+                onChange={handleForm}
+                placeholder="confirmez votre mot de passe"
+                required
+              />
+            </div>
+          </div>
+          <button
+            disabled={disable}
+            className="button is-primary"
+            type="submit"
+          >
+            Inscription
+          </button>
         </form>
-    )
+        <Link to="/login">Déjà inscrit? Connectez-vous</Link>
+      </>
+    );
 };
 
 export default UserFromCreate;

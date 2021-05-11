@@ -12,6 +12,7 @@ function UserParcour(){
     let [participant,setParticipant] = useState();
     const user = useContext(DataContext);
     const dataUser = user.dataUser;
+    
     useEffect(() => {
         Axios.get(URL_PARCOURS + dataUser.id)
         .then(({data}) => {
@@ -30,6 +31,7 @@ function UserParcour(){
         }
         
     }, [dataUser, participant]);
+
     return(
         <Router basename="/">
         <ul className="block-list">
