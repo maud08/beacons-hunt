@@ -41,12 +41,21 @@ class FireBase {
     userUpdate = (uid,user) => this.db.collection("users").doc(uid).update(user)
                         .then(() => {
                             console.log("Document successfully updated!");
+                        })
+                        .catch(error=> {
+                            console.log(error)
                         });
     
 
-    // Création d'un parcours dans la collection route
+    // Création d'un parcours dans la collection itinerary
     
-    itinerary = () => this.db.doc(`routes/`)
+    itinerary = (itineray) => this.db.collection(`itinerary/`).add({itineray})
+                        .then((docRef) => {
+                            console.log("Document successfully create",docRef.id);
+                        })
+                        .catch(error=> {
+                            console.log(error)
+                        })
 }
 
 export default FireBase;

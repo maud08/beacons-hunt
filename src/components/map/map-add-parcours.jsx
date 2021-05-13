@@ -1,69 +1,82 @@
-import React, { useState, useContext} from 'react';
-import Axios from 'axios';
-import LayerContext from '../context/layerContext';
-import AddMarker from './map-add-marker';
-
-const URL_PARCOURS = "https://aqueous-atoll-45909.herokuapp.com/parcours";
-let idDataParcours= null;
-
+import React, {useContext, useEffect, useState} from "react";
+import {Map, Marker, Popup, TileLayer} from "react-leaflet";
+import LayerContext from "../context/layerContext";
+import { FirebaseContext } from "../firebase";
 
 function AddParcours() {
+    const zoom = 8;
+    const map = useContext(LayerContext);
+    const firebase = useContext(FirebaseContext);
+    const [markers, setMarkers] = useState([]);
+    const [data, setData] = useState();
 
-    const parcours =  useContext(LayerContext);
-    const [parcoursData, setParcoursData] = useState();
-    const [isSubmit,setSubmit] = useState({submit:false});
-    const [idParcours] = useState();
-
+    // HANDLER
     const handleForm = (event) => {
-        const {name,value} = event.target;
-        setParcoursData({
-            ...parcoursData, [name]: value
-        })
-    }
+        const name = event.target.name;
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        setData({
+            ...data,
+            [name]: value
+        });
+    };
+    const handleMarker = (e) => {
+        const latlng = e.latlng;
+        setMarkers([
+            ...markers,
+            latlng
+        ]);
+    };
 
-    const handleSubmit = (event) =>{
+    const handleSubmit = (event) => {
         event.preventDefault();
-        parcours.addParcours({
-            ...parcoursData
-        });
-        Axios.post(URL_PARCOURS,{...parcoursData})
-        .then((resp) => {
-           idDataParcours = resp.data.id;
-           setSubmit({
-                submit: true
-           });
-           if(idParcours !== null){
-            parcours.addIdParcours({
-                ...idParcours,idDataParcours
-            })
-        }
-           
+        // il faut transformer le tableau en pure tableau d'objet javascript
+        const beacons = markers.map((obj) => {return Object.assign({},obj)});
+        const {label,isActive} = data;
+        firebase.itinerary({
+            label,
+            isActive,
+            beacons
         })
-        .catch((error)=>{
-            console.log(error);
-        });
-        
-        
-       
-    }
-    return(
+    };
+
+    // USEEFFECT
+    useEffect(() => {},[])
+
+    return (
         <>
             <form onSubmit={handleSubmit}>
                 <div className="field">
-                <label className="label">Label</label>
-                <div className="control">
-                    <input name="Label" className="input" type="text" placeholder="Nom de votre parcours" onChange={handleForm}/>
+                    <label className="label">Label</label>
+                    <div className="control">
+                        <input name="label" className="input" type="text" placeholder="Nom de votre parcours"
+                            onChange={handleForm}/>
+                    </div>
                 </div>
-                </div>
-                <div className="control">
-                    <button className="button is-link">Ajouter</button>
-                </div>
+                <label className="checkbox">
+                    <input name="isActive" type="checkbox" onChange={handleForm} />
+                    Activer le parcour
+                </label>
+                <button className="button is-success">Valider votre parcours</button>
             </form>
-        {isSubmit.submit === true && (
-            <AddMarker/>
-        )}
+            <Map center={
+                    map.points
+                }
+                zoom={zoom}
+                onclick={handleMarker}>
+                <TileLayer attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/> {
+                markers.map((position, idx) => (
+                    <Marker key={
+                            `marker-${idx}`
+                        }
+                        position={position}>
+                        <Popup>
+                            <span>Popup</span>
+                        </Popup>
+                    </Marker>
+                ))
+            } </Map>
         </>
-    )
+    );
 }
 
 export default AddParcours;

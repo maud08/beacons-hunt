@@ -132,9 +132,9 @@ function App() {
                       
                         <div className="navbar-dropdown">
                        
-                          <Link to="/parcours/add" className="navbar-item">
-                            Ajouter un parcour
-                          </Link>
+                          {organisateur === true &&
+                            <Link to="/parcours/add" className="navbar-item">Ajouter un parcour</Link>
+                          }
                 
                           <Link to="/parcours/mes-parcours" className="navbar-item">
                               Mes parcours
