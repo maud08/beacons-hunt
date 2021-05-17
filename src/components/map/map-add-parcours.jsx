@@ -5,10 +5,10 @@ import { FirebaseContext } from "../firebase";
 
 function AddParcours() {
     const zoom = 8;
-    const map = useContext(LayerContext);
+    const plan = useContext(LayerContext);
     const firebase = useContext(FirebaseContext);
     const [markers, setMarkers] = useState([]);
-    const [data, setData] = useState();
+    const [data, setData] = useState({isActive: false});
 
     // HANDLER
     const handleForm = (event) => {
@@ -16,9 +16,11 @@ function AddParcours() {
         const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
         setData({
             ...data,
-            [name]: value
+            [name]: value,
         });
+        
     };
+
     const handleMarker = (e) => {
         const latlng = e.latlng;
         setMarkers([
@@ -30,7 +32,7 @@ function AddParcours() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // il faut transformer le tableau en pure tableau d'objet javascript
-        const beacons = markers.map((obj) => {return Object.assign({},obj)});
+        const beacons = markers.plan((obj) => {return Object.assign({},obj)});
         const {label,isActive} = data;
         firebase.itinerary({
             label,
@@ -39,8 +41,6 @@ function AddParcours() {
         })
     };
 
-    // USEEFFECT
-    useEffect(() => {},[])
 
     return (
         <>
@@ -52,14 +52,18 @@ function AddParcours() {
                             onChange={handleForm}/>
                     </div>
                 </div>
-                <label className="checkbox">
-                    <input name="isActive" type="checkbox" onChange={handleForm} />
-                    Activer le parcour
-                </label>
+                <div className="field">
+                    <div className="control">
+                        <label className="checkbox">
+                            <input name="isActive" type="checkbox" onChange={handleForm} checked={data.isActive}/>
+                             Activer le parcour
+                        </label>
+                    </div>
+                </div>
                 <button className="button is-success">Valider votre parcours</button>
             </form>
             <Map center={
-                    map.points
+                    plan.points
                 }
                 zoom={zoom}
                 onclick={handleMarker}>

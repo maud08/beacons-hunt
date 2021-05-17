@@ -1,40 +1,34 @@
-import Axios from "axios";
-import React, {useEffect, useState } from "react";
-import { useParams } from "react-router";
+import React, {useContext, useEffect, useState } from "react";
 import { Map, TileLayer, Polygon } from "react-leaflet";
-
-const URL_PARCOURS = "https://aqueous-atoll-45909.herokuapp.com/parcours/";
+import LayerContext from "../context/layerContext";
 
 function BeaconsNotActive() {
+  const plan = useContext(LayerContext);
   const [data, setData] = useState([]);
   const [position, setPosition] = useState([]);
   const [beacons, setBeacons] = useState([]);
+
+  //LAYER
   const zoom = 10;
-  let id = useParams();
   let polygon = [];
-  let url = URL_PARCOURS + id.id;
   const purpleOptions = { color: "purple" };
 
+  //USEEFFECT
   useEffect(() => {
-    Axios.get(url)
-      .then((reponse) => {
-        setData(reponse.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+    setData(plan.planView.beacons)
+  },[])
 
   useEffect(() => {
     if (data.length !== 0) {
-      setPosition([data.balises[0].lat, data.balises[0].lng]);
-      setBeacons(data.balises);
+      setPosition([data[0].lat, data[0].lng]);
+      setBeacons(data);
     }
   }, [data]);
 
   useEffect(() => {
     polygon.push(beacons.map((position) => [position.lat, position.lng]));
   }, [beacons]);
+
 
   return (
     <>

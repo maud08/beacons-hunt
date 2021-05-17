@@ -49,13 +49,18 @@ class FireBase {
 
     // Création d'un parcours dans la collection itinerary
     
-    itinerary = (itineray) => this.db.collection(`itinerary/`).add({itineray})
+    itinerary = (itinerary) => this.db.collection(`itinerary/`).add(itinerary)
                         .then((docRef) => {
                             console.log("Document successfully create",docRef.id);
                         })
                         .catch(error=> {
                             console.log(error)
                         })
+
+    // GET ALL itinerary
+
+    getAllItineraryIsActive = () => this.db.collection('itinerary').where("isActive","==",true)
+                                            .get()
 }
 
 export default FireBase;
