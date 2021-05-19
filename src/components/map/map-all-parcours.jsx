@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useContext, } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
-import DataContext from '../context/userContext';
 import { FirebaseContext } from '../firebase';
 import BeaconsNotActive from './map-beacon-not-active';
 import { LayerProvider } from '../context/layerContext'
+import DataContext from '../context/userContext';
 
 
 function AllParcours(){
     
     const firebase = useContext(FirebaseContext);
+    const user = useContext(DataContext);
     const [itineraries,setItineraries] = useState([]);
     const [planView, setPlanView] = useState([]);
 
@@ -17,15 +18,9 @@ function AllParcours(){
     const handleParticipe = (event) => {
         event.preventDefault();
         const id = event.target.value;
-        // Axios.put(URL_PARCOURS + id,{
-        //     user: dataUser.id
-        // })
-        // .then((resp) => {
-        //     console.log(resp)
-        // })
-        // .catch((error) => {
-        //     console.log(error)
-        // })
+        // const admin = require("firebase-admin");
+        // const FieldValue = admin.firestore.FieldValue;
+        // firebase.itineraryUpdate(id,{participantId: firebase.FieldValue.arrayUnion(user.dataUser.id)});
     }
 
     const handlePlan = (event) => {
@@ -40,8 +35,7 @@ function AllParcours(){
             querySnapshot.forEach((doc) => {
                 data.push({id: doc.id, data: doc.data()})
             })
-            setItineraries(data);
-            
+            setItineraries(data);    
         })
         
     }, []);

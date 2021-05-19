@@ -1,5 +1,6 @@
+import { Circle } from "leaflet";
 import React, {useContext, useEffect, useState } from "react";
-import { Map, TileLayer, Polygon } from "react-leaflet";
+import { Map, TileLayer, Polygon} from "react-leaflet";
 import LayerContext from "../context/layerContext";
 
 function BeaconsNotActive() {
@@ -28,7 +29,6 @@ function BeaconsNotActive() {
   useEffect(() => {
     polygon.push(beacons.map((position) => [position.lat, position.lng]));
   }, [beacons]);
-
 
   return (
     <>

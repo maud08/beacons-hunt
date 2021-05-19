@@ -2,14 +2,17 @@ import React, {useContext, useEffect, useState} from "react";
 import {Map, Marker, Popup, TileLayer} from "react-leaflet";
 import LayerContext from "../context/layerContext";
 import { FirebaseContext } from "../firebase";
+import DataContext from "../context/userContext";
 
 function AddParcours() {
     const zoom = 8;
     const plan = useContext(LayerContext);
     const firebase = useContext(FirebaseContext);
+    const user = useContext(DataContext);
     const [markers, setMarkers] = useState([]);
     const [data, setData] = useState({isActive: false});
 
+    console.log("user",user)
     // HANDLER
     const handleForm = (event) => {
         const name = event.target.name;
@@ -32,12 +35,14 @@ function AddParcours() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // il faut transformer le tableau en pure tableau d'objet javascript
-        const beacons = markers.plan((obj) => {return Object.assign({},obj)});
+        const beacons = markers.map((obj) => {return Object.assign({},obj)});
         const {label,isActive} = data;
+        const userId = user.dataUser.id;
         firebase.itinerary({
             label,
             isActive,
-            beacons
+            beacons,
+            userId
         })
     };
 

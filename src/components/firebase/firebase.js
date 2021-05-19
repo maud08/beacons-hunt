@@ -4,12 +4,12 @@ import 'firebase/firestore';
 
 // configuration de firebase
 const config = {
-    apiKey: "AIzaSyDh_6k-sE0kEN72YKpKO9as8tLQ0o6ltlc",
-    authDomain: "beacons-hunt-86542.firebaseapp.com",
-    projectId: "beacons-hunt-86542",
-    storageBucket: "beacons-hunt-86542.appspot.com",
-    messagingSenderId: "1041313018469",
-    appId: "1:1041313018469:web:23f59ce1901c53c2cf0c8c"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN ,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_API_ID
   };
 
 class FireBase {
@@ -39,28 +39,58 @@ class FireBase {
     // Update user
 
     userUpdate = (uid,user) => this.db.collection("users").doc(uid).update(user)
-                        .then(() => {
-                            console.log("Document successfully updated!");
-                        })
-                        .catch(error=> {
-                            console.log(error)
-                        });
+                                        .then(() => {
+                                            console.log("Document successfully updated!");
+                                        })
+                                        .catch(error=> {
+                                            console.log(error)
+                                        });
     
 
     // Création d'un parcours dans la collection itinerary
     
     itinerary = (itinerary) => this.db.collection(`itinerary/`).add(itinerary)
-                        .then((docRef) => {
-                            console.log("Document successfully create",docRef.id);
-                        })
-                        .catch(error=> {
-                            console.log(error)
-                        })
+                                        .then((docRef) => {
+                                            console.log("Document successfully create",docRef.id);
+                                        })
+                                        .catch(error=> {
+                                            console.log(error)
+                                        })
 
-    // GET ALL itinerary
+    // GET ALL itinerary active
 
     getAllItineraryIsActive = () => this.db.collection('itinerary').where("isActive","==",true)
                                             .get()
+
+    // GET itinerary
+
+    getItinerary = (id) => this.db.collection('itinerary').doc(id)
+                                        .get()
+
+    // GET itinerary User
+
+    getItineraryUser = (uid) => this.db.collection('itinerary').where("userId","==",uid)
+                                        .get()
+
+    // Udpate itinerary
+
+    itineraryUpdate = (id,itinerary) => this.db.collection("itinerary/").doc(id).update(itinerary)
+                                                .then(() => {
+                                                    console.log("Document successfully updated!");
+                                                })
+                                                .catch(error=> {
+                                                    console.log(error)
+                                                });
+
+    // Create Game
+    
+    game = (game) => this.db.collection(`game/`).add(game)
+                                        .then((docRef) => {
+                                            console.log("Document successfully create",docRef.id);
+                                        })
+                                        .catch(error=> {
+                                            console.log(error)
+                                        })
 }
 
 export default FireBase;
