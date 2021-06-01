@@ -12,7 +12,6 @@ function AddParcours() {
     const [markers, setMarkers] = useState([]);
     const [data, setData] = useState({isActive: false});
 
-    console.log("user",user)
     // HANDLER
     const handleForm = (event) => {
         const name = event.target.name;
