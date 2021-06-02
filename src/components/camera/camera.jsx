@@ -13,10 +13,7 @@ function Camera() {
     const constraints = {
         video: {
             audio: false,
-            video: {
-                width: 300,
-                true: true,
-            },
+            true: true,
           facingMode: {
             exact: "environment"
           }
@@ -26,9 +23,10 @@ function Camera() {
 
     // Accés à la camera
     const getVideo = () => { // API du navigateur qui permet d'accéder au media
-        navigator.mediaDevices.getUserMedia(constraints).then(stream => { // permet d'accéder à la webCam
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => { // permet d'accéder à la webCam
             let video = videoRef.current;
-            video.srcObject = stream;
+            video.srcObject= stream;
             video.play();
         }).catch(err => {
             console.log("error", console.log(err))
