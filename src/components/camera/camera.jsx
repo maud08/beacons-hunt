@@ -11,13 +11,9 @@ function Camera() {
     const height = 240;
 
     const constraints = {
-        video: {
-            audio: false,
-            true: true,
-          facingMode: {
-            exact: "environment"
-          }
-        }
+        audio: false,
+        height: 9999,
+        video: {facingMode: 'environment'}
       };
 
 
