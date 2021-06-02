@@ -14,12 +14,11 @@ function Camera() {
     // Accés à la camera
     const getVideo = () => { // API du navigateur qui permet d'accéder au media
         navigator.mediaDevices.getUserMedia({
+            "audio": false,
             video: {
                 width: 300,
                 true: true,
-                facingMode: {
-                    exact: 'environment'
-                } 
+                facingMode: "environment"
             }
             
             
