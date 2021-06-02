@@ -10,19 +10,23 @@ function Camera() {
     const width = 320;
     const height = 240;
 
-
-    // Accés à la camera
-    const getVideo = () => { // API du navigateur qui permet d'accéder au media
-        navigator.mediaDevices.getUserMedia({
-            "audio": false,
+    const constraints = {
+        video: {
+            audio: false,
             video: {
                 width: 300,
                 true: true,
-                facingMode: {exact:"user"}
-            }
-            
-            
-        }).then(stream => { // permet d'accéder à la webCam
+            },
+          facingMode: {
+            exact: "environment"
+          }
+        }
+      };
+
+
+    // Accés à la camera
+    const getVideo = () => { // API du navigateur qui permet d'accéder au media
+        navigator.mediaDevices.getUserMedia(constraints).then(stream => { // permet d'accéder à la webCam
             let video = videoRef.current;
             video.srcObject = stream;
             video.play();
