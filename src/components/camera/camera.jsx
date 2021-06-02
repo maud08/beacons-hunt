@@ -15,7 +15,7 @@ function Camera(){
     const getVideo = () => {
         //API du navigateur qui permet d'accéder au media
         navigator.mediaDevices
-            .getUserMedia({video: {width:300}, audio: false})
+            .getUserMedia({video: {width:300}})
             .then(stream => {
                 //permet d'accéder à la webCam
                 let video = videoRef.current;
