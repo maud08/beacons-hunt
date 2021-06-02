@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import FirebaseContext from '../context/firebaseContext';
 import {getDistance, isPointInPolygon,findNearest } from 'geolib';
 import * as L from "leaflet";
+import Camera from '../camera/camera';
 // import DataContext from '../context/userContext';
 // import LayerContext from '../context/layerContext';
 
@@ -25,6 +26,8 @@ function UserRejoin(){
     const [currentPosition, setCurrentPosition] = useState(null);
     const [beaconsGame, setBeaconsGame] = useState([]);
     const [distanceBeacon, setDistanceBeacon ] = useState([]);
+    const [picture, setPicture] = useState([]);
+    const [takePicture, setTakePicture] = useState(true)
     const idParcour = useParams().id;
     const zoom = 8;
     let position = [];
@@ -115,11 +118,9 @@ function UserRejoin(){
             // // beacons.some(item => shallowEqual(item, currentPosition));
             beacons.map((beacon,idx) => {
                 if(getDistance((beacon), currentPosition) <= 10){
-                    console.log("ok",beacon,idx)
-                }else{
-                    console.log("dtc")
+                    
+                    setTakePicture(true);
                 }
-
             })            
         }
 
@@ -130,6 +131,12 @@ function UserRejoin(){
 
     return(
         <>
+        {
+            takePicture &&
+            <>
+               <Camera/> 
+            </>
+        }
         {beacons !== undefined && 
             <Map center={position} zoom={zoom} className="map">
                 <TileLayer
