@@ -18,7 +18,7 @@ function Camera() {
             video: {
                 width: 300,
                 true: true,
-                facingMode: "environment"
+                facingMode: {exact:"user"}
             }
             
             
