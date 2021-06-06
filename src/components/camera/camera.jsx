@@ -19,27 +19,14 @@ function Camera() {
 
     
     const getVideo = () => {
-        if(navigator.mediaDevices){
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(stream => { 
-            let video = videoRef.current;
-            video.srcObject= stream;
-            video.play();
-            }).catch(err => {
-                console.log("error", console.log(err))
-            });
-        }else{
-            navigator.webkitGetUserMedia.getUserMedia(constraints)
-            .then(stream => { 
-            let video = videoRef.current;
-            video.srcObject= stream;
-            video.play();
-            }).catch(err => {
-                console.log("error", console.log(err))
-            });
-        }
-        
-        
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (stream) { 
+        let video = videoRef.current;
+        video.srcObject= stream;
+        video.play();
+        }).catch(err => {
+            console.log("error", console.log(err))
+        });
     };
 
     
