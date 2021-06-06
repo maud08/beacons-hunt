@@ -4,7 +4,7 @@ import {useEffect} from "react";
 function Camera() {
 
 
-    const videoRef = useRef(null); // Réference pour le changement de valeur de la video
+    const videoRef = useRef(null); 
     const photoRef = useRef(null);
     const stripRef = useRef(null)
     const width = 320;
@@ -17,19 +17,32 @@ function Camera() {
       };
 
 
-    // Accés à la camera
-    const getVideo = () => { // API du navigateur qui permet d'accéder au media
-        navigator.mediaDevices.getUserMedia(constraints)
-        .then(stream => { // permet d'accéder à la webCam
+    
+    const getVideo = () => {
+        if(navigator.mediaDevices){
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => { 
             let video = videoRef.current;
             video.srcObject= stream;
             video.play();
-        }).catch(err => {
-            console.log("error", console.log(err))
-        });
+            }).catch(err => {
+                console.log("error", console.log(err))
+            });
+        }else{
+            navigator.webkitGetUserMedia.getUserMedia(constraints)
+            .then(stream => { 
+            let video = videoRef.current;
+            video.srcObject= stream;
+            video.play();
+            }).catch(err => {
+                console.log("error", console.log(err))
+            });
+        }
+        
+        
     };
 
-    // Canvas pour écrire la donné de la photo dans un context 2d
+    
 
     const paintToCanvas = () => {
         let video = videoRef.current;
@@ -44,7 +57,7 @@ function Camera() {
         }, 200)
     }
 
-    // Function pour arreter de "déssiner" la photo
+    
 
     const stop = (e) => {
         let video = videoRef.current;
